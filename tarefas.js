@@ -8,6 +8,16 @@ const construirTarefa = (nome, categoria, realizada) =>{
     }
 }
 
+
+const cadastrarTarefa = () => {
+    let nomeTarefaEl = document.querySelector("#nova-tarefa-nome");
+    let nomeTarefa = nomeTarefaEl.value;
+    let categoriaTarefa = document.querySelector("#nova-tarefa-categoria").value;
+    insereTarefaNaPagina(construirTarefa(nomeTarefa,categoriaTarefa, false))
+    nomeTarefaEl.value = "";
+    nomeTarefaEl.focus()
+}
+
 const adicionarClasses = (tarefaLi, tarefaClassList) => {
     tarefaClassList.forEach(classs => tarefaLi.classList.add(classs));
 }
@@ -31,3 +41,5 @@ const insereTarefaNaPagina = (tarefa) => {
 
 let tasks = [construirTarefa("Ler a maldição de strahd", "lazer", false), construirTarefa("Estudar DDD", "estudos", true)]
 tasks.forEach(task => insereTarefaNaPagina(task))
+let addButtonEl = document.querySelector("#incluir-nova-tarefa")
+addButtonEl.addEventListener('click', cadastrarTarefa)
