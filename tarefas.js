@@ -1,4 +1,5 @@
 let listaDeTarefas = document.querySelector("ul#lista-tarefas");
+let filterEl = document.querySelector("#filtro-de-categoria");
 
 const construirTarefa = (nome, categoria, realizada) =>{
     return {
@@ -7,7 +8,6 @@ const construirTarefa = (nome, categoria, realizada) =>{
         realizada: realizada
     }
 }
-
 
 const cadastrarTarefa = () => {
     let nomeTarefaEl = document.querySelector("#nova-tarefa-nome");
@@ -39,7 +39,20 @@ const insereTarefaNaPagina = (tarefa) => {
     listaDeTarefas.appendChild(tarefaLi);
 }
 
-let tasks = [construirTarefa("Ler a maldição de strahd", "lazer", false), construirTarefa("Estudar DDD", "estudos", true)]
-tasks.forEach(task => insereTarefaNaPagina(task))
-let addButtonEl = document.querySelector("#incluir-nova-tarefa")
-addButtonEl.addEventListener('click', cadastrarTarefa)
+const filtrarTarefas = () => {
+    let categoriaDoFiltro = filterEl.value.toLowerCase();
+    let classesDeTarefas = [".categoria-lazer", ".categoria-compras",".categoria-estudos"]
+    let tarefasFiltradas = document.querySelectorAll(".item-tarefa");
+    tarefasFiltradas.forEach(tarefa => tarefa.classList.remove("retido-no-filtro"))
+    let classesFiltradas = classesDeTarefas.filter(classe => !(classe.includes(categoriaDoFiltro)));
+    if(categoriaDoFiltro !== ""){
+        tarefasFiltradas = document.querySelectorAll(classesFiltradas.join(", "));
+        tarefasFiltradas.forEach(tarefa => tarefa.classList.add("retido-no-filtro"))
+    }
+}
+
+let tasks = [construirTarefa("Ler a maldição de strahd", "lazer", false), construirTarefa("Estudar DDD", "estudos", true)];
+tasks.forEach(task => insereTarefaNaPagina(task));
+let addButtonEl = document.querySelector("#incluir-nova-tarefa");
+addButtonEl.addEventListener('click', cadastrarTarefa);
+filterEl.addEventListener('change', filtrarTarefas);
