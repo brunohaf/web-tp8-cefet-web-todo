@@ -56,3 +56,8 @@ tasks.forEach(task => insereTarefaNaPagina(task));
 let addButtonEl = document.querySelector("#incluir-nova-tarefa");
 addButtonEl.addEventListener('click', cadastrarTarefa);
 filterEl.addEventListener('change', filtrarTarefas);
+document.addEventListener ('keyup', (event) => {
+    if(event.key === 'Enter'){
+        cadastrarTarefa();
+    }
+  });
