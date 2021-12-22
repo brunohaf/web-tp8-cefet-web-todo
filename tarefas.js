@@ -1,6 +1,5 @@
 let listaDeTarefas = document.querySelector("ul#lista-tarefas");
 let filterEl = document.querySelector("#filtro-de-categoria");
-let listaDeTarefasLi = let = document.querySelectorAll(".item-tarefa");
 
 const construirTarefa = (nome, categoria, realizada) =>{
     return {
@@ -43,7 +42,7 @@ const insereTarefaNaPagina = (tarefa) => {
 const filtrarTarefas = () => {
     let categoriaDoFiltro = filterEl.value.toLowerCase();
     let classesDeTarefas = [".categoria-lazer", ".categoria-compras",".categoria-estudos"]
-    let tarefasFiltradas = listaDeTarefasLi;
+    let tarefasFiltradas = document.querySelectorAll(".item-tarefa");;
     tarefasFiltradas.forEach(tarefa => tarefa.classList.remove("retido-no-filtro"))
     let classesFiltradas = classesDeTarefas.filter(classe => !(classe.includes(categoriaDoFiltro)));
     if(categoriaDoFiltro !== ""){
@@ -52,8 +51,11 @@ const filtrarTarefas = () => {
     }
 }
 
-const toggleCheckTarefa = (target) => {
-    target.classList.toggle("marcado")
+const toggleCheckTarefa = (event) => {
+    let targetEl = event.target;
+    if(targetEl && targetEl.classList.contains('item-tarefa')){
+        targetEl.classList.toggle("marcado")
+     }
 }
 
 let tasks = [construirTarefa("Ler a maldição de strahd", "lazer", false), construirTarefa("Estudar DDD", "estudos", true)];
@@ -67,9 +69,4 @@ document.addEventListener ('keyup', (event) => {
     }
   });
 
-  document.addEventListener('click',(event) => {
-      console.log(event.target.classList);
-    if(event.target && event.target.classList.contains('item-tarefa')){
-        toggleCheckTarefa(event.target)
-     }
- });
+  document.addEventListener('click', toggleCheckTarefa);
